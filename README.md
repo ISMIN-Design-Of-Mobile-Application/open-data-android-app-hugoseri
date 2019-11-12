@@ -2,12 +2,12 @@
 ## [APP NAME]  
   
 Codé par :   
- - [prenom1] [nom1]   
- - [prenom2] [nom2]   
+ - Pierre SEITE   
+ - Hugo SERIEYS   
 
 ## Description  
   
-URL des données : [URL]  
+URL des données : [Lien](https://data.opendatasoft.com/explore/dataset/archives-sncf-new%40datasncf/information/?sort=-id&dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6ImFyY2hpdmVzLXNuY2YtbmV3QGRhdGFzbmNmIiwib3B0aW9ucyI6eyJzb3J0IjoiLWlkIn19LCJjaGFydHMiOlt7ImFsaWduTW9udGgiOnRydWUsInR5cGUiOiJsaW5lIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoiaWQiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiIjMTQyRTdCIn1dLCJ4QXhpcyI6ImRhdGVfZGVfbnVtZXJpc2F0aW9uIiwibWF4cG9pbnRzIjoiIiwidGltZXNjYWxlIjoieWVhciIsInNvcnQiOiIifV0sImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWV9&fbclid=IwAR1BPU3k_74faJKKRMM9JXwwFe_beRJjB9wH9kdl-tfiLWmVbMIMipMpzj0&location=7,47.69867,0.36804&basemap=jawg.sunny).
   
 [A completer]  
   
