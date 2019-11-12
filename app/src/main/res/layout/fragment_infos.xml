@@ -46,6 +46,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
         android:text="Ville"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,13 +88,14 @@
         android:id="@+id/f_infos_img_preview"
         android:layout_width="0dp"
         android:layout_height="200sp"
+        android:background="#00723636"
         android:scaleType="centerCrop"
         android:scrollbarSize="0dp"
+        android:src="@drawable/data_img_sample_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/data_img_sample" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/f_infos_fab"
