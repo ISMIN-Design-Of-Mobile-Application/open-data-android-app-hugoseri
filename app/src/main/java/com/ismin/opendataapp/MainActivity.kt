@@ -20,10 +20,18 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         arrayListOf(49.29, 4.23),
         "Ce document dresse un historique complet de la situation de ligne d'Hirson à Amagne des débuts de la guerre jusqu'à 1924. L'ensemble des destructions subies par cette ligne est indiqué. Plusieurs annexes (tableaux, plans, etc.) viennent illustrer le propos.",
         "Reconstitution des lignes détruites pendant le cours de la Guerre 1914 - 1918 : ligne d'Hirson à Amagne",
-        "http://medias.sncf.com/sncfcom/open-data/thumb/tr_sardo_1749_thumb.jp",
+        "http://medias.sncf.com/sncfcom/open-data/thumb/tr_sardo_1749_thumb.jpg",
         "JPEG")
+    var item2 = Item("1914-1918",
+        "PARIS ILE-DE-France",
+        "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png", "SARDO",
+        arrayListOf(48.856614, 2.3522219),
+        "Cette série de clichés montre des femmes au travail dans différents ateliers et dépôts de la Compagnie des chemins de fer de Paris à Lyon et à la Méditerranée ainsi que dans des trains de banlieue. Ces photographies ont ensuite servi à illustrer l'agenda de la compagnie.",
+        "Utilisation de la main-d'œuvre féminine dans les ateliers, les dépôts et les trains PLM",
+        "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png",
+        "PNG")
 
-    var listItems: ArrayList<Item> = arrayListOf(item, item, item, item)
+    var listItems: ArrayList<Item> = arrayListOf(item, item2, item, item2)
 
     var listFragment: ListFragment = ListFragment()
     var mapFragment: MapFragment = MapFragment()
@@ -31,11 +39,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     override fun onItemClicked(item: Item) {
         val itemIntent = Intent(this, ItemActivity::class.java)
-        val bundle = Bundle()
-        bundle.putSerializable(ITEM_INFO, item as Serializable)
-        intent.putExtras(bundle)
-        startActivity(itemIntent)
-        finish()
+        itemIntent.putExtra(ITEM_INFO, item as Serializable)
+        this.startActivity(itemIntent)
     }
 
     override fun onFragmentInteraction(uri: Uri) {

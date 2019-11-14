@@ -17,7 +17,7 @@ class ItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        valFromMainActivity = intent.getSerializableExtra(ITEM_INFO)
+        valFromMainActivity = intent.getSerializableExtra(ITEM_INFO) as Item
 
         setContentView(R.layout.activity_item)
         backButton = findViewById(R.id.a_item_btn_img_back)
@@ -25,8 +25,8 @@ class ItemActivity : AppCompatActivity() {
                 this.finish()
                 )}
         floatingButton = findViewById(R.id.a_item_fab)
-        backButton.setOnClickListener{view: View? -> (
-                displayURL("https://www.sncf.com/fr")
+        floatingButton.setOnClickListener{view: View? -> (
+                displayURL(valFromMainActivity.url)
                 )}
     }
 
