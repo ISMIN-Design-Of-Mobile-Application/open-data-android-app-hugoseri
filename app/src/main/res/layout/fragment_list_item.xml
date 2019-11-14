@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/f_list_item_image"
+        android:id="@+id/f_list_item_icon"
         android:layout_width="84dp"
         android:layout_height="75dp"
         android:padding="10dp"
@@ -24,11 +24,11 @@
         android:text="Archives de la gare saint-lazare"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/f_list_item_image"
+        app:layout_constraintStart_toEndOf="@+id/f_list_item_icon"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
-        android:id="@+id/f_list_item_title2"
+        android:id="@+id/f_list_item_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -47,7 +47,7 @@
         android:layout_width="23dp"
         android:layout_height="31dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintStart_toEndOf="@+id/f_list_item_image"
+        app:layout_constraintStart_toEndOf="@+id/f_list_item_icon"
         app:layout_constraintTop_toBottomOf="@+id/f_list_item_title"
         app:srcCompat="@drawable/ic_google_maps_pin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

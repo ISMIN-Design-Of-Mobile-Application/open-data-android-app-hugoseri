@@ -7,9 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class ListFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
+
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +24,15 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        val rootview = inflater.inflate(R.layout.fragment_list, container, false)
+
+        recyclerView = rootview.findViewById<RecyclerView>(R.id.f_list_recyclerview)
+        val adapter = ListDataAdapter(arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>)
+        recyclerView.adapter = adapter
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+
+        return rootview
     }
 
     fun onButtonPressed(uri: Uri) {
