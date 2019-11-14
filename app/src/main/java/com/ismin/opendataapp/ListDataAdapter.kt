@@ -3,13 +3,14 @@ package com.ismin.opendataapp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.ismin.opendataapp.Item
 import com.ismin.opendataapp.R
 
 
 
-class ListDataAdapter(private val listItems: ArrayList<Item>) :
+class ListDataAdapter(private val listItems: ArrayList<Item>, private val itemClickListener: ListFragment.OnFragmentInteractionListener?) :
     RecyclerView.Adapter<ListDataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDataViewHolder {
@@ -25,6 +26,10 @@ class ListDataAdapter(private val listItems: ArrayList<Item>) :
         viewholder.itemTitle.text = item.titre
         viewholder.itemCity.text = item.lieux
         viewholder.itemIcon.setImageResource(getIconFromType(item.type))
+
+        viewholder.itemView.setOnClickListener {
+            itemClickListener?.onItemClicked(item)
+        }
     }
 
 

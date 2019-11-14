@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -27,7 +28,7 @@ class ListFragment : Fragment() {
         val rootview = inflater.inflate(R.layout.fragment_list, container, false)
 
         recyclerView = rootview.findViewById<RecyclerView>(R.id.f_list_recyclerview)
-        val adapter = ListDataAdapter(arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>)
+        val adapter = ListDataAdapter(arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>, listener)
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
@@ -55,5 +56,6 @@ class ListFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
+        fun onItemClicked(item: Item)
     }
 }

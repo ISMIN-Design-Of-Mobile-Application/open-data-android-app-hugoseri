@@ -1,8 +1,11 @@
 package com.ismin.opendataapp
 
+import android.content.Intent
 import android.icu.text.IDNA
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.TableLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -25,6 +28,15 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     var listFragment: ListFragment = ListFragment()
     var mapFragment: MapFragment = MapFragment()
     var infosFragment: InfosFragment = InfosFragment()
+
+    override fun onItemClicked(item: Item) {
+        val itemIntent = Intent(this, ItemActivity::class.java)
+        val bundle = Bundle()
+        bundle.putSerializable(ITEM_INFO, item as Serializable)
+        intent.putExtras(bundle)
+        startActivity(itemIntent)
+        finish()
+    }
 
     override fun onFragmentInteraction(uri: Uri) {
     }
