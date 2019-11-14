@@ -110,4 +110,18 @@
         app:layout_constraintTop_toBottomOf="@+id/a_item_img_preview"
         app:layout_constraintVertical_bias="1.0" />
 
+    <ImageButton
+        android:id="@+id/a_item_btn_img_back"
+        android:layout_width="47dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:adjustViewBounds="true"
+        android:background="#00FFFFFF"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_left_arrow" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
