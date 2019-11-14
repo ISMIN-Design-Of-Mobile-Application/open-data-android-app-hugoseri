@@ -6,4 +6,108 @@
     android:layout_height="match_parent"
     tools:context=".ItemActivity">
 
+    <ImageView
+        android:id="@+id/a_item_img_type_data"
+        android:layout_width="46dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/ic_pdf_file_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_img_preview" />
+
+    <TextView
+        android:id="@+id/a_item_txt_titre"
+        android:layout_width="303dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:text="Titre"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/a_item_img_type_data"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_img_preview" />
+
+    <ImageView
+        android:id="@+id/a_item_img_pin"
+        android:layout_width="23dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_google_maps_pin"
+        app:layout_constraintStart_toEndOf="@+id/a_item_img_type_data"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_txt_titre" />
+
+    <TextView
+        android:id="@+id/a_item_txt_ville"
+        android:layout_width="267dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:text="Ville"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/a_item_img_pin"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_txt_titre" />
+
+    <TextView
+        android:id="@+id/a_item_fixed_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="Description"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_img_pin" />
+
+    <TextView
+        android:id="@+id/a_item_txt_description"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="C'est la decription du contenu. On peut y trouver beaucoup de choses, vraiment beaucoup, beaucoup beaucoup. Parmis ces choses il y a des mots mais aussi des nombres."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_fixed_description"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/a_item_img_preview"
+        android:layout_width="0dp"
+        android:layout_height="200sp"
+        android:background="#00723636"
+        android:scaleType="centerCrop"
+        android:scrollbarSize="0dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/a_item_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="26dp"
+        android:clickable="true"
+        android:src="@drawable/ic_earth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a_item_img_preview"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
