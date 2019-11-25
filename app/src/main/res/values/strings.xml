@@ -1,6 +1,19 @@
 <resources>
-    <string name="app_name">OpenDataApp</string>
+    <string name="app_name">Archives SNCF</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="a_item_centre_archive">Où est stockée cette archive ?</string>
+    <string name="a_item_desc">Description</string>
+    <string name="a_item_title">Titre</string>
+    <string name="a_item_town">Ville</string>
+    <string name="a_item_period">Period-1918</string>
+    <string name="a_item_archived_location">Archive stocké au centre SARDO</string>
+    <string name="a_item_legend">C\'est la decription du contenu. On peut y trouver beaucoup de choses, vraiment beaucoup, beaucoup beaucoup. Parmis ces choses il y a des mots mais aussi des nombres.</string>
+    <string name="a_item_content_desc_preview_img">Preview of the archive</string>
+    <string name="a_item_content_desc_type_img">Type of the archive</string>
+    <string name="a_item_content_desc_town_img">Maps pinP</string>
+    <string name="a_item_content_desc_period_img">Hourglass</string>
+    <string name="a_item_content_desc_back_img_btn">Back button (close the activity)</string>
+    <string name="a_item_content_desc_fab">Floating button (open url)</string>
+
+
 </resources>
