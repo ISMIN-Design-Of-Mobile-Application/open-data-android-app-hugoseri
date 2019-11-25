@@ -20,21 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/a_item_btn_img_back"
-        android:layout_width="32dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        android:adjustViewBounds="true"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/a_item_content_desc_back_img_btn"
-        android:cropToPadding="false"
-        android:scaleType="fitCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_left_arrow" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/a_item_fab"
         android:layout_width="wrap_content"

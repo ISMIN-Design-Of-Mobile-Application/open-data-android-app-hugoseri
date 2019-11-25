@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         val tabLayout: TabLayout = findViewById(R.id.a_main_tablayout)
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 

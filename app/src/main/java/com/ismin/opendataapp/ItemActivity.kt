@@ -1,13 +1,17 @@
 package com.ismin.opendataapp
 
+import android.app.ActionBar
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import com.squareup.picasso.Picasso
@@ -19,24 +23,20 @@ class ItemActivity : AppCompatActivity() {
     lateinit var floatingButton: FloatingActionButton
     lateinit var valFromMainActivity: Item
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         valFromMainActivity = intent.getSerializableExtra(ITEM_INFO) as Item
 
         setContentView(R.layout.activity_item)
-        backButton = findViewById(R.id.a_item_btn_img_back)
-        backButton.setOnClickListener { _: View? ->
-            (
-                    this.finish()
-                    )
-        }
+
         floatingButton = findViewById(R.id.a_item_fab)
-        floatingButton.setOnClickListener { _: View? ->
-            (
-                    displayURL(valFromMainActivity.url)
-                    )
-        }
+        floatingButton.setOnClickListener { _: View? -> (
+            displayURL(valFromMainActivity.url)
+        )}
 
         val title: TextView = findViewById(R.id.a_item_txt_titre)
         title.text = valFromMainActivity.titre
@@ -61,6 +61,18 @@ class ItemActivity : AppCompatActivity() {
         previewImg.setOnClickListener{_ : View? ->(
             displayURL(valFromMainActivity.url)
             )}
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.itemId
+        if (id == android.R.id.home){
+            this.finish()
+        }
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean{
+        return true
     }
 
     fun displayURL(url: String) {
