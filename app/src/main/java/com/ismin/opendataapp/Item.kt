@@ -1,9 +1,12 @@
 package com.ismin.opendataapp
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Item (
+@Entity
+data class Item(
     val periode: String,
     val lieux: String,
     @SerializedName("url_de_l_archive")
@@ -15,5 +18,8 @@ data class Item (
     val titre: String,
     @SerializedName("url_de_la_capture_d_ecran")
     val apercu: String,
-    val type: String
-) : Serializable
+    var type: String
+) : Serializable {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}

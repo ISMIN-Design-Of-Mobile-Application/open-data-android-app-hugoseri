@@ -14,31 +14,36 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.Serializable
 
-class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, InfosFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionListener,
+    MapFragment.OnFragmentInteractionListener, InfosFragment.OnFragmentInteractionListener {
 
-    var item = Item("1918-1939",
+    var item = Item(
+        "1918-1939",
         "Paris",
         "http://medias.sncf.com/sncfcom/open-data/archives/tr_sardo_1749.pdf", "SARDO",
         arrayListOf(49.29, 4.23),
         "Ce document dresse un historique complet de la situation de ligne d'Hirson à Amagne des débuts de la guerre jusqu'à 1924. L'ensemble des destructions subies par cette ligne est indiqué. Plusieurs annexes (tableaux, plans, etc.) viennent illustrer le propos.",
         "Reconstitution des lignes détruites pendant le cours de la Guerre 1914 - 1918 : ligne d'Hirson à Amagne",
         "http://medias.sncf.com/sncfcom/open-data/thumb/tr_sardo_1749_thumb.jpg",
-        "JPEG")
-    var item2 = Item("1914-1918",
+        "JPEG"
+    )
+    var item2 = Item(
+        "1914-1918",
         "PARIS ILE-DE-France",
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png", "SARDO",
         arrayListOf(48.856614, 2.3522219),
         "Cette série de clichés montre des femmes au travail dans différents ateliers et dépôts de la Compagnie des chemins de fer de Paris à Lyon et à la Méditerranée ainsi que dans des trains de banlieue. Ces photographies ont ensuite servi à illustrer l'agenda de la compagnie. LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGTTTTTTTTTTTTTEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
         "Utilisation de la main-d'œuvre féminine dans les ateliers, les dépôts et les trains PLM",
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png",
-        "PNG")
+        "PNG"
+    )
 
     var listItems: ArrayList<Item> = arrayListOf(item, item2, item, item2)
 
     var listFragment: ListFragment = ListFragment()
     var mapFragment: MapFragment = MapFragment()
     var infosFragment: InfosFragment = InfosFragment()
-    lateinit var apiService : ApiService
+    lateinit var apiService: ApiService
 
     override fun onItemClicked(item: Item) {
         val itemIntent = Intent(this, ItemActivity::class.java)
@@ -75,8 +80,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
-        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab){
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager.currentItem = tab.position
             }
 
@@ -101,45 +106,21 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     }
 
 
-    fun getNbRowsDataFromApi(nbRows : Int){
-        var allRows : List<ApiDataFields>? = emptyList()
+    fun getNbRowsDataFromApi(nbRows: Int) {
         apiService.getAllDtata(nbRows).enqueue(object : Callback<ApiDataFormat> {
-                override fun onResponse(
-                    call: Call<ApiDataFormat>,
-                    response: Response<ApiDataFormat>
-                ) {
-                    val apiData = response.body()
-                    allRows = apiData?.records
-                }
-
-                override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Impossible to retrieve info from API : $t",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    println(t)
-                }
-            })
-    }
-
-    fun retrieveAllInfoFromDataBase(){
-        apiService.getNbItemInAPI().enqueue(object : Callback<ApiDataFormat> {
             override fun onResponse(
                 call: Call<ApiDataFormat>,
                 response: Response<ApiDataFormat>
             ) {
                 val apiData = response.body()
-                if(apiData != null) {
-                    getNbRowsDataFromApi(apiData.nhits)
-                }else{
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Error while retrieving the number of rows in API's dataset.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                val allFields= apiData?.records
+                var allRows : ArrayList<Item> = arrayListOf()
 
+                allFields!!.forEach {
+                    setExtenstiontoItemFromItem(it.fields)
+                    allRows.add(it.fields)
+                }
+                println("test")
             }
 
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
@@ -148,7 +129,49 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                     "Impossible to retrieve info from API : $t",
                     Toast.LENGTH_SHORT
                 ).show()
+                println(t)
             }
         })
+    }
+
+    fun retrieveAllInfoFromDataBase() {
+        apiService.getNbItemInAPI().enqueue(object : Callback<ApiDataFormat> {
+            override fun onResponse(
+                call: Call<ApiDataFormat>,
+                response: Response<ApiDataFormat>
+            ) {
+                val apiData = response.body()
+                if (apiData != null) {
+                    getNbRowsDataFromApi(apiData.nhits)
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error while retrieving the number of rows in API's dataset.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Impossible to retrieve info from API : $t",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+    fun findExtensionFromUrl(url: String): String {
+        var index: Int = url.length - 1
+        var type : String = ""
+        while (url[index] != '.'){
+            index--
+        }
+        for(i in (index+1)until(url.length)) type+=url[i]
+        return type.toUpperCase()
+    }
+
+    fun setExtenstiontoItemFromItem(item :Item) {
+        item.type = findExtensionFromUrl(item.url)
     }
 }
