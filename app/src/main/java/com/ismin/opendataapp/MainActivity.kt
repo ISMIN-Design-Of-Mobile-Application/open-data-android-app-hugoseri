@@ -1,15 +1,17 @@
 package com.ismin.opendataapp
 
 import android.content.Intent
-import android.icu.text.IDNA
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.TableLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, InfosFragment.OnFragmentInteractionListener {
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     var listFragment: ListFragment = ListFragment()
     var mapFragment: MapFragment = MapFragment()
     var infosFragment: InfosFragment = InfosFragment()
+    lateinit var apiService : ApiService
 
     override fun onItemClicked(item: Item) {
         val itemIntent = Intent(this, ItemActivity::class.java)
@@ -81,6 +84,70 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+
+        // API communication
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(SERVER_BASE_URL)
+            .build()
+        apiService = retrofit.create<ApiService>(ApiService::class.java)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        retrieveAllInfoFromDataBase()
+    }
+
+
+    fun getNbRowsDataFromApi(nbRows : Int){
+        var allRows : List<ApiDataFields>? = emptyList()
+        apiService.getAllDtata(nbRows).enqueue(object : Callback<ApiDataFormat> {
+                override fun onResponse(
+                    call: Call<ApiDataFormat>,
+                    response: Response<ApiDataFormat>
+                ) {
+                    val apiData = response.body()
+                    allRows = apiData?.records
+                }
+
+                override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Impossible to retrieve info from API : $t",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    println(t)
+                }
+            })
+    }
+
+    fun retrieveAllInfoFromDataBase(){
+        apiService.getNbItemInAPI().enqueue(object : Callback<ApiDataFormat> {
+            override fun onResponse(
+                call: Call<ApiDataFormat>,
+                response: Response<ApiDataFormat>
+            ) {
+                val apiData = response.body()
+                if(apiData != null) {
+                    getNbRowsDataFromApi(apiData.nhits)
+                }else{
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error while retrieving the number of rows in API's dataset.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Impossible to retrieve info from API : $t",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
