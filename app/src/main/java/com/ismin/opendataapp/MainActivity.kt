@@ -63,6 +63,9 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         listFragment.arguments = bundle
         adapter.addFragment(listFragment, "Liste")
 
+        //TO BE REMOVED
+        mapFragment.arguments = bundle
+
         adapter.addFragment(mapFragment, "Carte")
 
         adapter.addFragment(infosFragment, "Infos")

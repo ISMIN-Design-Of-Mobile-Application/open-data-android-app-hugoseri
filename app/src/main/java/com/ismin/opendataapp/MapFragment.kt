@@ -12,13 +12,18 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.fragment_map.*
 
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var mMap: GoogleMap
+
+    //TO BE REMOVED
+    private lateinit var items: ArrayList<Item>
 
     override fun onStart() {
         super.onStart()
@@ -33,6 +38,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        //TO BE REMOVED
+        items = arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>
+
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
@@ -62,13 +71,30 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        addItemsOnMap()
+
+        mMap.setOnInfoWindowClickListener(this)
+
+        val customInfoWindow = CustomMapMarkerWindow(this.context)
+        mMap!!.setInfoWindowAdapter(customInfoWindow)
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(47.0, 2.5))) //France center
+        mMap.animateCamera( CameraUpdateFactory.zoomTo( 5.0f ))
+    }
+
+    fun addItemsOnMap(){
+        for ((index, item) in items.withIndex()){
+            val gps = item.coordonnees
+            val marker = mMap.addMarker(MarkerOptions().position(LatLng(gps[0], gps[1])).title(item.titre))
+            marker.tag = index
+        }
+    }
+
+    override fun onInfoWindowClick(marker: Marker) {
+        listener?.onItemClicked(items.get(marker.tag.toString().toInt()))
     }
 
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(uri: Uri)
+        fun onItemClicked(item: Item)
     }
 }

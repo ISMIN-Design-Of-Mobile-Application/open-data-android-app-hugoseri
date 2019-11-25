@@ -14,6 +14,19 @@
     <string name="a_item_content_desc_period_img">Hourglass</string>
     <string name="a_item_content_desc_back_img_btn">Back button (close the activity)</string>
     <string name="a_item_content_desc_fab">Floating button (open url)</string>
+    <string name="voir_plus">Voir plus...</string>
+    <string name="titre">Titre</string>
+    <string name="a_propos_de_l_application">A propos de l\'application</string>
+    <string name="a_propos_de_lapplication_text">Application réalisée dans le cadre du cours Design of Mobile Application à l\'Ecole des Mines de Saint-Etienne cursus ISMIN.</string>
+    <string name="description_de_l_application">Description de l\'application</string>
+    <string name="description_de_l_application_text">
+        Cette application permet de visualiser les archives de la SNCF.
+        Les données d\'archives étant associées à une géolocalisation,
+        elles sont affichées sur une carte de la France.
+        Chaque élément de l\'archive peut être soit une image soit un fichier pdf, tous consultables.
+        Il est aussi possible de télécharger l\'archive.</string>
+    <string name="auteurs">Auteurs de l\'application</string>
+    <string name="auteurs_txt">Pierre SEITE et Hugo SERIEYS sont les deux développeurs de ce projet.</string>
 
 
 </resources>

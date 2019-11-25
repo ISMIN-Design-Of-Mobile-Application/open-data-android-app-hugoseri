@@ -36,10 +36,6 @@ class ListFragment : Fragment() {
         return rootview
     }
 
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -55,7 +51,6 @@ class ListFragment : Fragment() {
     }
 
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(uri: Uri)
         fun onItemClicked(item: Item)
     }
 }
