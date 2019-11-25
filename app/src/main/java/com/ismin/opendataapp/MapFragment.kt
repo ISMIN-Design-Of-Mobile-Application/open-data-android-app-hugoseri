@@ -84,8 +84,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     fun addItemsOnMap(){
         for ((index, item) in items.withIndex()){
-            val gps = item.coordonnees
-            val marker = mMap.addMarker(MarkerOptions().position(LatLng(gps[0], gps[1])).title(item.titre))
+            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.long)).title(item.titre))
             marker.tag = index
         }
     }
