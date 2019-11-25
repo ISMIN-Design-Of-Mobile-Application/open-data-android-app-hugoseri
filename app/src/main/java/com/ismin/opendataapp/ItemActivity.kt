@@ -3,7 +3,6 @@ package com.ismin.opendataapp
 import android.app.ActionBar
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,9 +12,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.squareup.picasso.OkHttp3Downloader
 
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Callback
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
+
+
+import javax.xml.datatype.DatatypeConstants.SECONDS
+
 
 class ItemActivity : AppCompatActivity() {
 
@@ -51,10 +56,17 @@ class ItemActivity : AppCompatActivity() {
         val archived: TextView = findViewById(R.id.a_item_txt_archived_location)
         archived.text = valFromMainActivity.lieux_de_conservation
         val previewImg : ImageButton = findViewById(R.id.a_item_img_preview)
+        //Initialize a ok http downloader to use timeouts
+        val client = OkHttpClient().newBuilder()
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(120,TimeUnit.SECONDS)
+            .writeTimeout(120, TimeUnit.SECONDS)
+            .build()
         val picasso = Picasso.Builder(this)
             .listener { _, _, e -> e.printStackTrace() }
+            .downloader(OkHttp3Downloader(client))
             .build()
-        picasso.load(Uri.parse("https://en.wikipedia.org/wiki/Wikipedia#/media/File:Wikipedia-logo-v2.svg"))
+        picasso.load(Uri.parse(valFromMainActivity.apercu))
             .placeholder(R.drawable.ic_launcher_background)
             .error(R.drawable.ic_file_unknown)
             .into(previewImg)
