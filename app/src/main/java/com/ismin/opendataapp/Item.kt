@@ -9,14 +9,12 @@ import java.io.Serializable
 data class Item(
     val periode: String,
     val lieux: String,
-    @SerializedName("url_de_l_archive")
     val url: String,
     val lieux_de_conservation: String,
-    @SerializedName("coordonnees_geographique")
-    val coordonnees: ArrayList<Double>,
+    val lat:Double,
+    val long:Double,
     val legende: String,
     val titre: String,
-    @SerializedName("url_de_la_capture_d_ecran")
     val apercu: String,
     var type: String
 ) : Serializable {

@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     var mapFragment: MapFragment = MapFragment()
     var infosFragment: InfosFragment = InfosFragment()
     lateinit var apiService: ApiService
+    private lateinit var itemDao: ItemDao
 
     override fun onItemClicked(item: Item) {
         val itemIntent = Intent(this, ItemActivity::class.java)
@@ -98,11 +99,30 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             .baseUrl(SERVER_BASE_URL)
             .build()
         apiService = retrofit.create<ApiService>(ApiService::class.java)
+
+        //Create instance to connect to the dataBase
+        itemDao = AppDataBase.getAppDatabase(this)
+            .getItemDao()
     }
 
     override fun onStart() {
         super.onStart()
-        retrieveAllInfoFromDataBase()
+        if(itemDao.getAll().isEmpty()) {
+            retrieveAllInfoFromDataBase()
+            Toast.makeText(
+                this@MainActivity,
+                "The data base has just benn filled",
+                Toast.LENGTH_SHORT
+            ).show()
+        }else{
+            Toast.makeText(
+                this@MainActivity,
+                "The data base was not empty",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        var allRows : ArrayList<Item> = itemDao.getAll()
+        println("Test")
     }
 
 
@@ -114,13 +134,11 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             ) {
                 val apiData = response.body()
                 val allFields= apiData?.records
-                var allRows : ArrayList<Item> = arrayListOf()
-
                 allFields!!.forEach {
                     setExtenstiontoItemFromItem(it.fields)
-                    allRows.add(it.fields)
+
+                    itemDao.insert(createItemFromItemApiData(it.fields))
                 }
-                println("test")
             }
 
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
@@ -129,9 +147,9 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                     "Impossible to retrieve info from API : $t",
                     Toast.LENGTH_SHORT
                 ).show()
-                println(t)
             }
         })
+
     }
 
     fun retrieveAllInfoFromDataBase() {
@@ -171,7 +189,14 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         return type.toUpperCase()
     }
 
-    fun setExtenstiontoItemFromItem(item :Item) {
+    fun setExtenstiontoItemFromItem(item :ItemApiData) {
         item.type = findExtensionFromUrl(item.url)
+    }
+
+    fun createItemFromItemApiData(itemApi : ItemApiData) : Item{
+        var item : Item = Item(itemApi.periode, itemApi.lieux, itemApi.url,
+            itemApi.lieux_de_conservation, itemApi.coordonnees[0], itemApi.coordonnees[1],
+            itemApi.legende, itemApi.titre, itemApi.apercu)
+        return item
     }
 }
