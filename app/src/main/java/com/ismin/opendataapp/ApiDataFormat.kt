@@ -13,6 +13,7 @@ data class ApiDataFields(
 ): Serializable
 
 data class ItemApiData(
+    var id : Int,
     val periode: String,
     val lieux: String,
     @SerializedName("url_de_l_archive")
