@@ -23,6 +23,7 @@
         android:id="@+id/f_list_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="Archives de la gare saint-lazare"
@@ -49,6 +50,7 @@
         android:id="@+id/imageView2"
         android:layout_width="23dp"
         android:layout_height="31dp"
+        android:layout_marginLeft="10dp"
         app:layout_constraintStart_toEndOf="@+id/f_list_item_icon"
         app:layout_constraintTop_toBottomOf="@+id/f_list_item_title"
         app:srcCompat="@drawable/ic_google_maps_pin" />
