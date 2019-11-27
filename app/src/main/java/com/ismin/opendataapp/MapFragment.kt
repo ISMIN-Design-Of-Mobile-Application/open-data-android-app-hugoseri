@@ -89,19 +89,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         for ((index, item) in items.withIndex()){
 //            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.long)).title(item.titre))
 //            marker.tag = index
-            val offsetItem = ClusterItem(item.lat, item.long, item.titre, "", index)
+            val offsetItem = ClusterItem(item.lat,item.lng)// item.long, item.titre, "", index)
             mClusterManager!!.addItem(offsetItem)
         }
-        var lat = 49.29
-        var lng = 4.23
-        for (i in 0..9) {
-            val offset = i / 60.0
-            var lat = lat + offset
-            var lng = lng + offset
-            val offsetItem = ClusterItem(lat, lng)
-            mClusterManager!!.addItem(offsetItem)
-        }
-
         mClusterManager!!.cluster()
     }
 
