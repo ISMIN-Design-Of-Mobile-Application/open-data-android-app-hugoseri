@@ -11,16 +11,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.OkHttp3Downloader
 
 import com.squareup.picasso.Picasso
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
-
-
-import javax.xml.datatype.DatatypeConstants.SECONDS
 
 
 class ItemActivity : AppCompatActivity() {

@@ -1,20 +1,18 @@
 package com.ismin.opendataapp
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.fragment_map.*
+import com.google.maps.android.clustering.ClusterManager
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -24,6 +22,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     //TO BE REMOVED
     private lateinit var items: ArrayList<Item>
+
+    // Declare a variable for the cluster manager.
+    var mClusterManager: ClusterManager<ClusterItem>? = null
 
     override fun onStart() {
         super.onStart()
@@ -71,22 +72,37 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        addItemsOnMap()
-
         mMap.setOnInfoWindowClickListener(this)
+        mClusterManager = ClusterManager<ClusterItem>(activity, mMap)
+
+        mMap.setOnCameraIdleListener(mClusterManager)
 
         val customInfoWindow = CustomMapMarkerWindow(this.context)
         mMap!!.setInfoWindowAdapter(customInfoWindow)
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(47.0, 2.5))) //France center
         mMap.animateCamera( CameraUpdateFactory.zoomTo( 5.0f ))
+        addItemsOnMap()
     }
 
     fun addItemsOnMap(){
         for ((index, item) in items.withIndex()){
-            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.long)).title(item.titre))
-            marker.tag = index
+//            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.long)).title(item.titre))
+//            marker.tag = index
+            val offsetItem = ClusterItem(item.lat, item.long, item.titre, "", index)
+            mClusterManager!!.addItem(offsetItem)
         }
+        var lat = 49.29
+        var lng = 4.23
+        for (i in 0..9) {
+            val offset = i / 60.0
+            var lat = lat + offset
+            var lng = lng + offset
+            val offsetItem = ClusterItem(lat, lng)
+            mClusterManager!!.addItem(offsetItem)
+        }
+
+        mClusterManager!!.cluster()
     }
 
     override fun onInfoWindowClick(marker: Marker) {

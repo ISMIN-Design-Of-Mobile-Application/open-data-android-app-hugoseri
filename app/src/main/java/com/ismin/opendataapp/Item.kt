@@ -6,7 +6,7 @@ import java.io.Serializable
 
 @Entity
 data class Item(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var id: Int = 0,
     var periode: String ="",
     var lieux: String= "",

@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         "1914-1918",
         "PARIS ILE-DE-France",
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png", "SARDO",
-        48.856614,
-        2.3522219,
+        49.29,
+        4.231,
         "Cette série de clichés montre des femmes au travail dans différents ateliers et dépôts de la Compagnie des chemins de fer de Paris à Lyon et à la Méditerranée ainsi que dans des trains de banlieue. Ces photographies ont ensuite servi à illustrer l'agenda de la compagnie. LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGTTTTTTTTTTTTTEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
         "Utilisation de la main-d'œuvre féminine dans les ateliers, les dépôts et les trains PLM",
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png",
@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     override fun onStart() {
         super.onStart()
+        itemDao.deleteAllInDatabase()
         if(itemDao.getAll().isEmpty()) {
             retrieveAllInfoFromDataBase()
             Toast.makeText(
@@ -146,6 +147,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     //Called when data are finished to be added to the dataBase after request from API
     fun dataAddedToDataBase(){
         var allRows : List<Item> = itemDao.getAll()
+        println("Test")
     }
 
     fun getNbRowsDataFromApi(nbRows: Int) {
@@ -159,7 +161,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                 allFields!!.forEach {
                     setExtenstiontoItemFromItem(it.fields)
                     if(itemApiObjectContainsNullData(it.fields)){
-                        itemDao.insert(createItemFromItemApiData(it.fields))
+                        var temp : Item = createItemFromItemApiData(it.fields)
+                        itemDao.insert(temp)
                     }
                 }
                 dataAddedToDataBase()
@@ -220,7 +223,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         var item: Item = Item(
             itemApi.id, itemApi.periode, itemApi.lieux, itemApi.url,
             itemApi.lieux_de_conservation, itemApi.coordonnees[0], itemApi.coordonnees[1],
-            itemApi.legende, itemApi.titre, itemApi.apercu
+            itemApi.legende, itemApi.titre, itemApi.apercu, itemApi.type
         )
         return item
     }
