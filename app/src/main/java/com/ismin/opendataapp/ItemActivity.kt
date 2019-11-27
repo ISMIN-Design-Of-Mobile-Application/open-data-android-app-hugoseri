@@ -65,6 +65,9 @@ class ItemActivity : AppCompatActivity() {
             .build()
         picasso.load(Uri.parse(valFromMainActivity.apercu))
             .placeholder(R.drawable.ic_launcher_background)
+            .resize(1024, 800)
+            .centerCrop()
+            .onlyScaleDown()
             .error(R.drawable.ic_file_unknown)
             .into(previewImg)
         previewImg.setOnClickListener{_ : View? ->(

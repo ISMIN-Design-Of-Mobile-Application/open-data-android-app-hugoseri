@@ -13,6 +13,9 @@ interface ItemDao {
     @Query("SELECT * FROM item")
     fun getAll(): List<Item>
 
+    @Query("SELECT * FROM item WHERE id = :id")
+    fun getById(id: Int): List<Item>
+
     @Query("DELETE FROM item")
     fun deleteAllInDatabase()
 }
