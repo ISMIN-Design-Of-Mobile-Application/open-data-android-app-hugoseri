@@ -86,7 +86,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     fun addItemsOnMap(){
         for ((index, item) in items.withIndex()){
-            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.long)).title(item.titre))
+            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.lng)).title(item.titre))
             marker.tag = index
         }
     }

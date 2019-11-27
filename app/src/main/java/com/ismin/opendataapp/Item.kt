@@ -13,7 +13,7 @@ data class Item(
     var url: String="",
     var lieux_de_conservation: String="",
     var lat:Double=0.0,
-    var long:Double=0.0,
+    var lng:Double=0.0,
     var legende: String="",
     var titre: String="",
     var apercu: String?="",

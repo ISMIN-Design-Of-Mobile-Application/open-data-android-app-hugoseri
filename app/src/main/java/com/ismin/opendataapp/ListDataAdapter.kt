@@ -41,7 +41,7 @@ class ListDataAdapter(private val listItems: List<Item>, private val fragmentInt
             picasso.load(Uri.parse(item.apercu))
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_file_unknown)
-                .resize(1024, 800)
+                .resize(500, 500)
                 .centerCrop()
                 .onlyScaleDown()
                 .into(viewholder.itemIcon)
