@@ -3,7 +3,6 @@ package com.ismin.opendataapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.BoringLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -18,6 +17,7 @@ import java.io.Serializable
 class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionListener,
     MapFragment.OnFragmentInteractionListener, InfosFragment.OnFragmentInteractionListener {
 
+    /*
     var item = Item(
         0,
         "1918-1939",
@@ -42,8 +42,9 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png",
         "PNG"
     )
-
-    var listItems: ArrayList<Item> = arrayListOf(item, item2, item, item2)
+    var listItems: ArrayList<Item> = arrayListOf(item, item2)
+    */
+    var listItems: ArrayList<Item> = arrayListOf()
 
     var listFragment: ListFragment = ListFragment()
     var mapFragment: MapFragment = MapFragment()
@@ -80,16 +81,22 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         val tabLayout: TabLayout = findViewById(R.id.a_main_tablayout)
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
+        // API communication
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(SERVER_BASE_URL)
+            .build()
+        apiService = retrofit.create<ApiService>(ApiService::class.java)
+
+        //Create instance to connect to the dataBase
+        itemDao = AppDataBase.getAppDatabase(this)
+            .getItemDao()
+
         val viewPager: ViewPager = findViewById(R.id.a_main_viewpager)
         val adapter = PagerAdapter(supportFragmentManager, tabLayout.tabCount)
 
-        val bundle = Bundle()
-        bundle.putSerializable(LIST_ITEM_INFO, listItems as Serializable)
-        listFragment.arguments = bundle
-        adapter.addFragment(listFragment, "Liste")
 
-        //TO BE REMOVED
-        mapFragment.arguments = bundle
+        adapter.addFragment(listFragment, "Liste")
 
         adapter.addFragment(mapFragment, "Carte")
 
@@ -111,41 +118,24 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-
-        // API communication
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(SERVER_BASE_URL)
-            .build()
-        apiService = retrofit.create<ApiService>(ApiService::class.java)
-
-        //Create instance to connect to the dataBase
-        itemDao = AppDataBase.getAppDatabase(this)
-            .getItemDao()
     }
 
     override fun onStart() {
         super.onStart()
         if(itemDao.getAll().isEmpty()) {
-            retrieveAllInfoFromDataBase()
+            retrieveAllInfoFromAPI()
             Toast.makeText(
                 this@MainActivity,
-                "The data base has just benn filled",
+                "The database is being filled.",
                 Toast.LENGTH_SHORT
             ).show()
         }else{
             Toast.makeText(
                 this@MainActivity,
-                "The data base was not empty",
+                "The data base is already filled.",
                 Toast.LENGTH_SHORT
             ).show()
         }
-
-    }
-
-    //Called when data are finished to be added to the dataBase after request from API
-    fun dataAddedToDataBase(){
-        var allRows : List<Item> = itemDao.getAll()
     }
 
     fun getNbRowsDataFromApi(nbRows: Int) {
@@ -162,7 +152,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                         itemDao.insert(createItemFromItemApiData(it.fields))
                     }
                 }
-                dataAddedToDataBase()
+                mapFragment.refreshItems()
+                listFragment.refreshItems()
             }
 
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
@@ -175,7 +166,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         })
     }
 
-    fun retrieveAllInfoFromDataBase() {
+    fun retrieveAllInfoFromAPI() {
         apiService.getNbItemInAPI().enqueue(object : Callback<ApiDataFormat> {
             override fun onResponse(
                 call: Call<ApiDataFormat>,
