@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 
-class ListDataAdapter(private val listItems: ArrayList<Item>, private val fragmentInteractionListener: ListFragment.OnFragmentInteractionListener?, private val context: Context?) :
+class ListDataAdapter(private val listItems: List<Item>, private val fragmentInteractionListener: ListFragment.OnFragmentInteractionListener?, private val context: Context?) :
     RecyclerView.Adapter<ListDataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDataViewHolder {
@@ -22,8 +22,7 @@ class ListDataAdapter(private val listItems: ArrayList<Item>, private val fragme
     }
 
     override fun onBindViewHolder(viewholder: ListDataViewHolder, position: Int) {
-        val item = this.listItems[position]
-
+        val item = listItems[position]
 
         viewholder.itemTitle.text = item.titre
         viewholder.itemCity.text = item.lieux
@@ -42,6 +41,9 @@ class ListDataAdapter(private val listItems: ArrayList<Item>, private val fragme
             picasso.load(Uri.parse(item.apercu))
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_file_unknown)
+                .resize(500, 500)
+                .centerCrop()
+                .onlyScaleDown()
                 .into(viewholder.itemIcon)
             viewholder.itemIcon.setOnClickListener { _: View? ->
                 (

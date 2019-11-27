@@ -21,9 +21,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var mMap: GoogleMap
+    private lateinit var itemDao : ItemDao
 
     //TO BE REMOVED
-    private lateinit var items: ArrayList<Item>
+    lateinit var items: List<Item>
 
     override fun onStart() {
         super.onStart()
@@ -37,10 +38,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
-        //TO BE REMOVED
-        items = arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>
+        //Create instance to connect to the dataBase
+        itemDao = AppDataBase.getAppDatabase(this.requireContext())
+            .getItemDao()
+        items = itemDao.getAll()
 
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
@@ -84,9 +86,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     fun addItemsOnMap(){
         for ((index, item) in items.withIndex()){
-            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.long)).title(item.titre))
+            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.lng)).title(item.titre))
             marker.tag = index
         }
+    }
+
+    fun refreshItems(){
+        items = itemDao.getAll()
+        addItemsOnMap()
     }
 
     override fun onInfoWindowClick(marker: Marker) {

@@ -15,6 +15,8 @@ class ListFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
     lateinit var recyclerView: RecyclerView
+    lateinit var items: List<Item>
+    lateinit var itemDao: ItemDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +29,14 @@ class ListFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootview = inflater.inflate(R.layout.fragment_list, container, false)
 
-        recyclerView = rootview.findViewById<RecyclerView>(R.id.f_list_recyclerview)
-        val adapter = ListDataAdapter(arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>, listener, context)
+        recyclerView = rootview.findViewById(R.id.f_list_recyclerview)
+
+        itemDao = AppDataBase.getAppDatabase(this.requireContext())
+            .getItemDao()
+
+        items = itemDao.getAll()
+
+        val adapter = ListDataAdapter(items, listener, context)
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
@@ -48,6 +56,11 @@ class ListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    fun refreshItems(){
+        items = itemDao.getAll()
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     interface OnFragmentInteractionListener {
