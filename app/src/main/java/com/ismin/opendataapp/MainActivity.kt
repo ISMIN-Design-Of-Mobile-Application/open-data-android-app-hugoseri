@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         "1918-1939",
         "Paris",
         "http://medias.sncf.com/sncfcom/open-data/archives/tr_sardo_1749.pdf", "SARDO",
-        49.29, 4.23,
+        49.29,
+        4.23,
         "Ce document dresse un historique complet de la situation de ligne d'Hirson à Amagne des débuts de la guerre jusqu'à 1924. L'ensemble des destructions subies par cette ligne est indiqué. Plusieurs annexes (tableaux, plans, etc.) viennent illustrer le propos.",
         "Reconstitution des lignes détruites pendant le cours de la Guerre 1914 - 1918 : ligne d'Hirson à Amagne",
         "http://medias.sncf.com/sncfcom/open-data/thumb/tr_sardo_1749_thumb.jpg",
@@ -34,7 +35,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         "1914-1918",
         "PARIS ILE-DE-France",
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png", "SARDO",
-        48.856614, 2.3522219,
+        48.856614,
+        2.3522219,
         "Cette série de clichés montre des femmes au travail dans différents ateliers et dépôts de la Compagnie des chemins de fer de Paris à Lyon et à la Méditerranée ainsi que dans des trains de banlieue. Ces photographies ont ensuite servi à illustrer l'agenda de la compagnie. LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGTTTTTTTTTTTTTEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
         "Utilisation de la main-d'œuvre féminine dans les ateliers, les dépôts et les trains PLM",
         "http://medias.sncf.com/sncfcom/open-data/thumb/thumb_tr_sardo_1751.png",
@@ -53,6 +55,17 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         val itemIntent = Intent(this, ItemActivity::class.java)
         itemIntent.putExtra(ITEM_INFO, item as Serializable)
         this.startActivity(itemIntent)
+    }
+
+    override fun displayURL(url: String) {
+        val webpage = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        val chooser = Intent.createChooser(intent, "Ouvrir avec")
+
+        // Verify the intent will resolve to at least one activity
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(chooser)
+        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -74,6 +87,9 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         bundle.putSerializable(LIST_ITEM_INFO, listItems as Serializable)
         listFragment.arguments = bundle
         adapter.addFragment(listFragment, "Liste")
+
+        //TO BE REMOVED
+        mapFragment.arguments = bundle
 
         adapter.addFragment(mapFragment, "Carte")
 

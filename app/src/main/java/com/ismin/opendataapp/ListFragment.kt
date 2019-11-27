@@ -28,16 +28,12 @@ class ListFragment : Fragment() {
         val rootview = inflater.inflate(R.layout.fragment_list, container, false)
 
         recyclerView = rootview.findViewById<RecyclerView>(R.id.f_list_recyclerview)
-        val adapter = ListDataAdapter(arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>, listener)
+        val adapter = ListDataAdapter(arguments!!.getSerializable(LIST_ITEM_INFO) as ArrayList<Item>, listener, context)
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
 
         return rootview
-    }
-
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
     }
 
     override fun onAttach(context: Context) {
@@ -55,7 +51,7 @@ class ListFragment : Fragment() {
     }
 
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(uri: Uri)
         fun onItemClicked(item: Item)
+        fun displayURL(url: String)
     }
 }
