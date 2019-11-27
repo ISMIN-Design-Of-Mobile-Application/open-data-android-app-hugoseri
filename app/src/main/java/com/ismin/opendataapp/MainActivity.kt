@@ -45,6 +45,17 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
         this.startActivity(itemIntent)
     }
 
+    override fun displayURL(url: String) {
+        val webpage = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        val chooser = Intent.createChooser(intent, "Ouvrir avec")
+
+        // Verify the intent will resolve to at least one activity
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(chooser)
+        }
+    }
+
     override fun onFragmentInteraction(uri: Uri) {
     }
 
