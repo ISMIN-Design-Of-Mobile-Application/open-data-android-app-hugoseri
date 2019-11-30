@@ -1,37 +1,40 @@
 package com.ismin.opendataapp
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.fragment_map.*
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
+import com.google.maps.android.clustering.view.DefaultClusterRenderer
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var mMap: GoogleMap
-    private lateinit var itemDao : ItemDao
+    private lateinit var itemDao: ItemDao
+    private var mapAlreadyset: Boolean = false
 
     //TO BE REMOVED
     lateinit var items: List<Item>
+
+    // Declare a variable for the cluster manager.
+    lateinit var mClusterManager: ClusterManager<ClusterItem>
 
     override fun onStart() {
         super.onStart()
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
     }
 
     override fun onCreateView(
@@ -71,33 +74,44 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        if (!mapAlreadyset) {
+            mapAlreadyset = true
+            mMap = googleMap
 
-        addItemsOnMap()
+            mMap.setOnInfoWindowClickListener(this)
+            mClusterManager = ClusterManager<ClusterItem>(activity, mMap)
+            val markerClusterRenderer =
+                DefaultClusterRenderer<ClusterItem>(activity, googleMap, mClusterManager)
+            mClusterManager.renderer = markerClusterRenderer
+            mMap.setInfoWindowAdapter(mClusterManager.markerManager)
+            val customInfoWindow = CustomMapMarkerWindow(this.context)
+            mClusterManager.markerCollection.setOnInfoWindowAdapter(customInfoWindow)
 
-        mMap.setOnInfoWindowClickListener(this)
 
-        val customInfoWindow = CustomMapMarkerWindow(this.context)
-        mMap!!.setInfoWindowAdapter(customInfoWindow)
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(47.0, 2.5))) //France center
-        mMap.animateCamera( CameraUpdateFactory.zoomTo( 5.0f ))
-    }
-
-    fun addItemsOnMap(){
-        for ((index, item) in items.withIndex()){
-            val marker = mMap.addMarker(MarkerOptions().position(LatLng(item.lat, item.lng)).title(item.titre))
-            marker.tag = index
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(47.0, 2.5))) //France center
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(5.0f))
+            mMap.setOnCameraIdleListener(mClusterManager)
+            mMap.setOnMarkerClickListener(mClusterManager)
+            addItemsOnMap()
         }
     }
 
-    fun refreshItems(){
+    fun addItemsOnMap() {
+        for ((index, item) in items.withIndex()) {
+            val offsetItem = ClusterItem(item.lat, item.lng, item.titre, index.toString())
+            mClusterManager.addItem(offsetItem)
+        }
+        mClusterManager.cluster()
+    }
+
+    fun refreshItems() {
         items = itemDao.getAll()
         addItemsOnMap()
     }
 
     override fun onInfoWindowClick(marker: Marker) {
-        listener?.onItemClicked(items.get(marker.tag.toString().toInt()))
+        listener?.onItemClicked(items[marker.snippet.toInt()])
     }
 
     interface OnFragmentInteractionListener {

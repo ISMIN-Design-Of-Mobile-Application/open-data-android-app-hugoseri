@@ -182,8 +182,8 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     fun createItemFromItemApiData(itemApi : ItemApiData) : Item{
         var item: Item = Item(
             itemApi.id, itemApi.periode, itemApi.lieux, itemApi.url,
-            itemApi.lieux_de_conservation, itemApi.coordonnees[0], itemApi.coordonnees[1],
-            itemApi.legende, itemApi.titre, itemApi.apercu
+            itemApi.lieux_de_conservation, itemApi.coordonnees[0], itemApi.coordonnees.get(1),
+            itemApi.legende, itemApi.titre, itemApi.apercu, itemApi.type
         )
         return item
     }
