@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     fun maybeRequestAPI() {
         super.onStart()
-        itemDao.deleteAllInDatabase()
         if(itemDao.getAll().isEmpty()) {
             retrieveAllInfoFromAPI()
             Toast.makeText(

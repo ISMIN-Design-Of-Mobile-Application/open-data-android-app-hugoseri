@@ -9,7 +9,6 @@ class ClusterItem : ClusterItem {
     private val mPosition: LatLng
     var mTitle: String = ""
     var mSnippet: String = ""
-    var mIndex: Int = 0
 
     constructor(lat: Double, lng: Double) {
         mPosition = LatLng(lat, lng)
@@ -19,13 +18,11 @@ class ClusterItem : ClusterItem {
         lat: Double,
         lng: Double,
         title: String,
-        snippet: String,
-        index: Int
+        snippet: String
     ) {
         mPosition = LatLng(lat, lng)
         mTitle = title
         mSnippet = snippet
-        mIndex = index
     }
 
     override fun getPosition(): LatLng {
@@ -38,9 +35,5 @@ class ClusterItem : ClusterItem {
 
     override fun getSnippet(): String {
         return mSnippet
-    }
-
-    fun getIndex():Int{
-        return mIndex
     }
 }
