@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ListFragment">
 
     <EditText
@@ -14,7 +16,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/recherche"
         android:inputType="textPersonName"
-        android:autofillHints="" />
+        android:importantForAutofill="no" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/f_list_recyclerview"
