@@ -21,7 +21,10 @@ class ListDataAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDataViewHolder {
         val row =
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_list_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.fragment_list_item, parent,
+                false
+            )
 
         return ListDataViewHolder(row)
     }
@@ -45,7 +48,6 @@ class ListDataAdapter(
                         fragmentInteractionListener?.displayURL(item.url)
                         )
             }
-
             viewholder.itemView.setOnClickListener {
                 fragmentInteractionListener?.onItemClicked(item)
             }

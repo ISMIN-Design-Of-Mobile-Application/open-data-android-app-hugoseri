@@ -1,9 +1,7 @@
 package com.ismin.opendataapp
 
 import com.google.android.gms.maps.model.LatLng
-
 import com.google.maps.android.clustering.ClusterItem
-
 
 class ClusterItem : ClusterItem {
     private val mPosition: LatLng

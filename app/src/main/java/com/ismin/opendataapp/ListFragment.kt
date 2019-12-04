@@ -18,9 +18,9 @@ class ListFragment : Fragment() {
     lateinit var items: List<Item>
     lateinit var itemDao: ItemDao
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +31,7 @@ class ListFragment : Fragment() {
 
         recyclerView = rootview.findViewById(R.id.f_list_recyclerview)
 
-        itemDao = AppDataBase.getAppDatabase(this.requireContext())
-            .getItemDao()
+        itemDao = AppDataBase.getAppDatabase(this.requireContext()).getItemDao()
 
         items = itemDao.getAll()
 
@@ -49,7 +48,10 @@ class ListFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(
+                context.toString() +
+                        " must implement OnFragmentInteractionListener"
+            )
         }
     }
 
@@ -58,7 +60,7 @@ class ListFragment : Fragment() {
         listener = null
     }
 
-    fun refreshItems(){
+    fun refreshItems() {
         items = itemDao.getAll()
         recyclerView.adapter?.notifyDataSetChanged()
     }
