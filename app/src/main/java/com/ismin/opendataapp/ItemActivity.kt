@@ -31,6 +31,7 @@ class ItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item)
 
         floatingButton = findViewById(R.id.a_item_fab)
+        floatingButton.setImageBitmap(textAsBitmap(valFromMainActivity.type))
         floatingButton.setOnClickListener { _: View? -> (
             displayURL(valFromMainActivity.url)
         )}
@@ -39,8 +40,10 @@ class ItemActivity : AppCompatActivity() {
         title.text = valFromMainActivity.titre
         val position: TextView = findViewById(R.id.a_item_txt_ville)
         position.text = valFromMainActivity.lieux
+        /*
         val typeImg: ImageView = findViewById(R.id.a_item_img_type_data)
         typeImg.setImageResource(getIconFromType(valFromMainActivity.type))
+        */
         val desc: TextView = findViewById(R.id.a_item_txt_description)
         desc.text = valFromMainActivity.legende
         val periode: TextView = findViewById(R.id.a_item_txt_periode)

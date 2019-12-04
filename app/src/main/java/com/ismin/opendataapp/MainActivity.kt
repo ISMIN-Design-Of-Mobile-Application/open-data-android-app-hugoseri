@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                 val allFields= apiData?.records
                 allFields!!.forEach {
                     setExtenstiontoItemFromItem(it.fields)
-                    if(itemApiObjectContainsNullData(it.fields)){
+                    if(itemApiObjectDoNotContainsNullData(it.fields)){
                         itemDao.insert(createItemFromItemApiData(it.fields))
                     }
                 }
@@ -181,14 +181,14 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     fun createItemFromItemApiData(itemApi : ItemApiData) : Item{
         var item: Item = Item(
-            itemApi.id, itemApi.periode, itemApi.lieux, itemApi.url,
+            itemApi.id, itemApi.periode, onlyFirstLetterUpperCase(itemApi.lieux), httpToHttps(itemApi.url),
             itemApi.lieux_de_conservation, itemApi.coordonnees[0], itemApi.coordonnees.get(1),
-            itemApi.legende, itemApi.titre, itemApi.apercu, itemApi.type
+            itemApi.legende, itemApi.titre, httpToHttps(itemApi.apercu), itemApi.type
         )
         return item
     }
 
-    fun itemApiObjectContainsNullData(i: ItemApiData) : Boolean{
+    fun itemApiObjectDoNotContainsNullData(i: ItemApiData) : Boolean{
         return  i.id!=null && i.periode!=null  && i.lieux!=null && i.url!=null &&
                 i.lieux_de_conservation!=null && i.legende!=null && i.titre!=null && i.apercu!=null
                 && i.type!=null && i.coordonnees!=null

@@ -15,7 +15,7 @@
         android:clickable="true"
         android:contentDescription="@string/a_item_content_desc_fab"
         android:focusable="true"
-        android:src="@drawable/ic_earth"
+        android:text="@string/item_floating_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -48,39 +48,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/a_item_img_type_data"
-                android:layout_width="46dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="50dp"
-                android:contentDescription="@string/a_item_content_desc_type_img"
-                android:src="@drawable/ic_pdf_file_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a_item_img_preview"/>
-
             <TextView
                 android:id="@+id/a_item_txt_titre"
-                android:layout_width="303dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/a_item_title"
+                android:textAllCaps="false"
                 android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/a_item_img_type_data"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/a_item_img_preview" />
 
             <ImageView
                 android:id="@+id/a_item_img_pin"
                 android:layout_width="23dp"
                 android:layout_height="31dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/a_item_town"
                 android:src="@drawable/ic_google_maps_pin"
-                app:layout_constraintStart_toEndOf="@+id/a_item_img_type_data"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/a_item_txt_titre" />
 
             <TextView
@@ -121,6 +111,7 @@
                 android:layout_marginTop="40dp"
                 android:text="@string/a_item_desc"
                 android:textSize="17sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,14 +121,14 @@
                 android:id="@+id/a_item_txt_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:scrollbars="vertical"
                 android:text="@string/a_item_legend"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/a_item_fixed_description"
                 app:layout_constraintVertical_bias="0.0" />
@@ -146,8 +137,8 @@
                 android:id="@+id/a_item_txt_archived_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="80dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:scrollbars="vertical"
@@ -163,10 +154,10 @@
                 android:id="@+id/a_img_hourglass"
                 android:layout_width="23dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/a_item_content_desc_period_img"
-                app:layout_constraintStart_toEndOf="@+id/a_item_img_type_data"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/a_item_img_pin"
                 app:srcCompat="@drawable/ic_hourglass" />
 
@@ -178,6 +169,7 @@
                 android:layout_marginTop="40dp"
                 android:text="@string/a_item_centre_archive"
                 android:textSize="17sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
