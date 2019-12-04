@@ -3,6 +3,8 @@ package com.ismin.opendataapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -42,6 +44,26 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     override fun onFragmentInteraction(uri: Uri) {
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                Toast.makeText(this, "Actualisation des données", Toast.LENGTH_SHORT).show()
+                maybeRequestAPI()
+                listFragment.refreshItems()
+                true
+            }
+            // If we got here, the user's action was not recognized.
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,13 +120,13 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             retrieveAllInfoFromAPI()
             Toast.makeText(
                 this@MainActivity,
-                "The database is being filled.",
+                "Actualisation des données.",
                 Toast.LENGTH_SHORT
             ).show()
         }else{
             Toast.makeText(
                 this@MainActivity,
-                "The data base is already filled.",
+                "Les données sont à jours.",
                 Toast.LENGTH_SHORT
             ).show()
         }

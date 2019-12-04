@@ -32,12 +32,6 @@ class ListDataAdapter(
         viewholder.itemTitle.text = item.titre
         viewholder.itemCity.text = item.lieux
 
-        val client = OkHttpClient().newBuilder()
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .build()
-
         if (context != null) {
             Glide.with(context)
                 .load(Uri.parse(item.apercu))
