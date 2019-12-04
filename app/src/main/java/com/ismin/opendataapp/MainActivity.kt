@@ -1,5 +1,6 @@
 package com.ismin.opendataapp
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -115,21 +116,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     }
 
     fun maybeRequestAPI() {
-        super.onStart()
-        if(itemDao.getAll().isEmpty()) {
-            retrieveAllInfoFromAPI()
-            Toast.makeText(
-                this@MainActivity,
-                "Actualisation des données.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }else{
-            Toast.makeText(
-                this@MainActivity,
-                "Les données sont à jours.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        retrieveAllInfoFromAPI()
     }
 
     fun getNbRowsDataFromApi(nbRows: Int) {
@@ -168,7 +155,24 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             ) {
                 val apiData = response.body()
                 if (apiData != null) {
-                    getNbRowsDataFromApi(apiData.nhits)
+                    val nbRowsInApiPreviousCall = getPreferences(Context.MODE_PRIVATE).getInt(NB_ROWS_IN_API, -1)
+                    if(apiData.nhits != nbRowsInApiPreviousCall) {
+                        val editor = getPreferences(Context.MODE_PRIVATE).edit()
+                        editor.putInt(NB_ROWS_IN_API, apiData.nhits)
+                        editor.apply()
+                        getNbRowsDataFromApi(apiData.nhits)
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Actualisation des données.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Les données sont à jours.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 } else {
                     Toast.makeText(
                         this@MainActivity,
