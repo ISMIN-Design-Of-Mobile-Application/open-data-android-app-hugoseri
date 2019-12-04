@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/a_main_tablayout"
         android:layout_width="0dp"
