@@ -6,17 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.OkHttp3Downloader
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 
-class ListDataAdapter(private val listItems: List<Item>, private val fragmentInteractionListener: ListFragment.OnFragmentInteractionListener?, private val context: Context?) :
+class ListDataAdapter(
+    private val listItems: List<Item>,
+    private val fragmentInteractionListener: ListFragment.OnFragmentInteractionListener?,
+    private val context: Context?
+) :
     RecyclerView.Adapter<ListDataViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDataViewHolder {
-        val row = LayoutInflater.from(parent.context).inflate(R.layout.fragment_list_item, parent, false)
+        val row =
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_list_item, parent, false)
 
         return ListDataViewHolder(row)
     }
@@ -34,16 +39,12 @@ class ListDataAdapter(private val listItems: List<Item>, private val fragmentInt
             .build()
 
         if (context != null) {
-            val picasso = Picasso.Builder(context)
-                .listener { _, _, e -> e.printStackTrace() }
-                .downloader(OkHttp3Downloader(client))
-                .build()
-            picasso.load(Uri.parse(item.apercu))
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_file_unknown)
-                .resize(500, 500)
+            Glide.with(context)
+                .load(Uri.parse(item.apercu))
+                .thumbnail(Glide.with(context).load(R.drawable.loading))
+                .apply(RequestOptions().override(500, 500))
                 .centerCrop()
-                .onlyScaleDown()
+                .error(R.drawable.ic_file_unknown)
                 .into(viewholder.itemIcon)
             viewholder.itemIcon.setOnClickListener { _: View? ->
                 (

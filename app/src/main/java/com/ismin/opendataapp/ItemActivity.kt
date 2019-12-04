@@ -1,6 +1,5 @@
 package com.ismin.opendataapp
 
-import android.app.ActionBar
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,17 +10,13 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.squareup.picasso.OkHttp3Downloader
-
-import com.squareup.picasso.Picasso
-import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
 
 
 class ItemActivity : AppCompatActivity() {
 
-    lateinit var backButton: ImageButton
     lateinit var floatingButton: FloatingActionButton
     lateinit var valFromMainActivity: Item
 
@@ -56,26 +51,17 @@ class ItemActivity : AppCompatActivity() {
         val archived: TextView = findViewById(R.id.a_item_txt_archived_location)
         archived.text = valFromMainActivity.lieux_de_conservation
         val previewImg : ImageButton = findViewById(R.id.a_item_img_preview)
-        //Initialize a ok http downloader to use timeouts
-        val client = OkHttpClient().newBuilder()
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(120,TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .build()
-        val picasso = Picasso.Builder(this)
-            .listener { _, _, e -> e.printStackTrace() }
-            .downloader(OkHttp3Downloader(client))
-            .build()
-        picasso.load(Uri.parse(valFromMainActivity.apercu))
-            .placeholder(R.drawable.ic_launcher_background)
-            .resize(1024, 800)
+
+        Glide.with(this)
+            .load(R.color.colorPrimary)
+            .placeholder(R.drawable.loading)
+            .apply(RequestOptions().override(1024, 800))
             .centerCrop()
-            .onlyScaleDown()
             .error(R.drawable.ic_file_unknown)
             .into(previewImg)
         previewImg.setOnClickListener{_ : View? ->(
-            displayURL(valFromMainActivity.url)
-            )}
+                displayURL(valFromMainActivity.url)
+                )}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
