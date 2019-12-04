@@ -87,8 +87,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             val customInfoWindow = CustomMapMarkerWindow(this.context)
             mClusterManager.markerCollection.setOnInfoWindowAdapter(customInfoWindow)
 
-
-
             mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(47.0, 2.5))) //France center
             mMap.animateCamera(CameraUpdateFactory.zoomTo(5.0f))
             mMap.setOnCameraIdleListener(mClusterManager)
