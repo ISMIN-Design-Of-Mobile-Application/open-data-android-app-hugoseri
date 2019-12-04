@@ -10,11 +10,20 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
+import java.util.Locale.filter
+import com.google.android.gms.common.data.DataHolder
+
+
+
 
 class ListFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
     lateinit var recyclerView: RecyclerView
+    lateinit var adapter: ListDataAdapter
     lateinit var items: List<Item>
     lateinit var itemDao: ItemDao
 
@@ -30,17 +39,43 @@ class ListFragment : Fragment() {
         val rootview = inflater.inflate(R.layout.fragment_list, container, false)
 
         recyclerView = rootview.findViewById(R.id.f_list_recyclerview)
+        val searchField: EditText = rootview.findViewById(R.id.f_list_research)
 
         itemDao = AppDataBase.getAppDatabase(this.requireContext()).getItemDao()
 
         items = itemDao.getAll()
 
-        val adapter = ListDataAdapter(items, listener, context)
+        adapter = ListDataAdapter(items, listener, context)
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
 
+        searchField.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                filter(s.toString())
+            }
+        })
+
         return rootview
+    }
+
+    fun filter(text: String) {
+        val temp = arrayListOf<Item>()
+        var lowerText = text.toLowerCase()
+        for (d in items) {
+            if (d.titre.toLowerCase().contains(lowerText) ||
+                d.legende.toLowerCase().contains(lowerText) ||
+                d.lieux.toLowerCase().contains(lowerText)) {
+                temp.add(d)
+            }
+        }
+        adapter.updateList(temp)
     }
 
     override fun onAttach(context: Context) {
@@ -62,7 +97,7 @@ class ListFragment : Fragment() {
 
     fun refreshItems() {
         items = itemDao.getAll()
-        recyclerView.adapter?.notifyDataSetChanged()
+        adapter.updateList(items)
     }
 
     interface OnFragmentInteractionListener {

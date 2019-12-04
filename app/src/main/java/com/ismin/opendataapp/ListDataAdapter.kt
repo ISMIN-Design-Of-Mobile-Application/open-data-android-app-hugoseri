@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 
 class ListDataAdapter(
-    private val listItems: List<Item>,
+    private var listItems: List<Item>,
     private val fragmentInteractionListener: ListFragment.OnFragmentInteractionListener?,
     private val context: Context?
 ) :
@@ -56,5 +56,10 @@ class ListDataAdapter(
 
     override fun getItemCount(): Int {
         return this.listItems.size
+    }
+
+    fun updateList(list: List<Item>){
+        listItems = list
+        notifyDataSetChanged()
     }
 }
