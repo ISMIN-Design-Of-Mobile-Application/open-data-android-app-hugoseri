@@ -42,7 +42,7 @@
         android:paddingLeft="10dp"
         android:paddingEnd="10dp"
         android:text="Paris"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"

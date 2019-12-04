@@ -14,7 +14,6 @@ class CustomMapMarkerWindow(val context: Context?) : GoogleMap.InfoWindowAdapter
     }
 
     override fun getInfoContents(p0: Marker?): View {
-
         var mInfoView = (context as Activity).layoutInflater.inflate(R.layout.fragment_map_marker_window, null)
 
         mInfoView.f_map_window_title.text = p0?.title
