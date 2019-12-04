@@ -29,6 +29,6 @@
     <string name="auteurs_txt">Pierre SEITE et Hugo SERIEYS sont les deux développeurs de ce projet.</string>
     <string name="item_floating_button_text">PNG</string>
     <string name="recherche">Recherche</string>
-
-
+    <string name="refresh_menu_btn">Rafraîchir</string>
+ 
 </resources>

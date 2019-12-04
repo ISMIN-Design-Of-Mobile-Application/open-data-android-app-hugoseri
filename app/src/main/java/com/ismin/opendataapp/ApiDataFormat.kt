@@ -9,11 +9,11 @@ data class ApiDataFormat(
 ) : Serializable
 
 data class ApiDataFields(
-   var fields: ItemApiData
-): Serializable
+    var fields: ItemApiData
+) : Serializable
 
 data class ItemApiData(
-    var id : Int,
+    var id: Int,
     val periode: String,
     val lieux: String,
     @SerializedName("url_de_l_archive")

@@ -53,8 +53,8 @@ class ItemActivity : AppCompatActivity() {
         val previewImg : ImageButton = findViewById(R.id.a_item_img_preview)
 
         Glide.with(this)
-            .load(R.color.colorPrimary)
-            .placeholder(R.drawable.loading)
+            .load(Uri.parse(valFromMainActivity.apercu))
+            .thumbnail(Glide.with(this).load(R.drawable.loading))
             .apply(RequestOptions().override(1024, 800))
             .centerCrop()
             .error(R.drawable.ic_file_unknown)

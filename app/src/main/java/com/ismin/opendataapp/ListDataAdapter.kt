@@ -21,7 +21,10 @@ class ListDataAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDataViewHolder {
         val row =
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_list_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.fragment_list_item, parent,
+                false
+            )
 
         return ListDataViewHolder(row)
     }
@@ -31,12 +34,6 @@ class ListDataAdapter(
 
         viewholder.itemTitle.text = item.titre
         viewholder.itemCity.text = item.lieux
-
-        val client = OkHttpClient().newBuilder()
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .build()
 
         if (context != null) {
             Glide.with(context)
@@ -51,7 +48,6 @@ class ListDataAdapter(
                         fragmentInteractionListener?.displayURL(item.url)
                         )
             }
-
             viewholder.itemView.setOnClickListener {
                 fragmentInteractionListener?.onItemClicked(item)
             }

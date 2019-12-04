@@ -1,8 +1,11 @@
 package com.ismin.opendataapp
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -42,6 +45,25 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     override fun onFragmentInteraction(uri: Uri) {
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                maybeRequestAPI()
+                listFragment.refreshItems()
+                true
+            }
+            // If we got here, the user's action was not recognized.
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,21 +115,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
     }
 
     fun maybeRequestAPI() {
-        super.onStart()
-        if(itemDao.getAll().isEmpty()) {
-            retrieveAllInfoFromAPI()
-            Toast.makeText(
-                this@MainActivity,
-                "The database is being filled.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }else{
-            Toast.makeText(
-                this@MainActivity,
-                "The data base is already filled.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        retrieveAllInfoFromAPI()
     }
 
     fun getNbRowsDataFromApi(nbRows: Int) {
@@ -117,10 +125,10 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                 response: Response<ApiDataFormat>
             ) {
                 val apiData = response.body()
-                val allFields= apiData?.records
+                val allFields = apiData?.records
                 allFields!!.forEach {
                     setExtenstiontoItemFromItem(it.fields)
-                    if(itemApiObjectDoNotContainsNullData(it.fields)){
+                    if (itemApiObjectDoNotContainsNullData(it.fields)) {
                         itemDao.insert(createItemFromItemApiData(it.fields))
                     }
                 }
@@ -146,7 +154,25 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             ) {
                 val apiData = response.body()
                 if (apiData != null) {
-                    getNbRowsDataFromApi(apiData.nhits)
+                    val nbRowsInApiPreviousCall =
+                        getPreferences(Context.MODE_PRIVATE).getInt(NB_ROWS_IN_API, -1)
+                    if (apiData.nhits != nbRowsInApiPreviousCall) {
+                        val editor = getPreferences(Context.MODE_PRIVATE).edit()
+                        editor.putInt(NB_ROWS_IN_API, apiData.nhits)
+                        editor.apply()
+                        getNbRowsDataFromApi(apiData.nhits)
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Actualisation des données.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Les données sont à jours.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 } else {
                     Toast.makeText(
                         this@MainActivity,
@@ -155,10 +181,11 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                     ).show()
                 }
             }
+
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Impossible to retrieve info from API : $t",
+                    "Impossible d'actualiser les données. Verifier votre connexion internet.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -167,30 +194,38 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
 
     fun findExtensionFromUrl(url: String): String {
         var index: Int = url.length - 1
-        var type : String = ""
-        while (url[index] != '.'){
+        var type: String = ""
+        while (url[index] != '.') {
             index--
         }
-        for(i in (index+1)until(url.length)) type+=url[i]
+        for (i in (index + 1) until (url.length)) type += url[i]
         return type.toUpperCase()
     }
 
-    fun setExtenstiontoItemFromItem(item :ItemApiData) {
+    fun setExtenstiontoItemFromItem(item: ItemApiData) {
         item.type = findExtensionFromUrl(item.url)
     }
 
-    fun createItemFromItemApiData(itemApi : ItemApiData) : Item{
+    fun createItemFromItemApiData(itemApi: ItemApiData): Item {
         var item: Item = Item(
-            itemApi.id, itemApi.periode, onlyFirstLetterUpperCase(itemApi.lieux), httpToHttps(itemApi.url),
-            itemApi.lieux_de_conservation, itemApi.coordonnees[0], itemApi.coordonnees.get(1),
-            itemApi.legende, itemApi.titre, httpToHttps(itemApi.apercu), itemApi.type
+            itemApi.id,
+            itemApi.periode,
+            onlyFirstLetterUpperCase(itemApi.lieux),
+            httpToHttps(itemApi.url),
+            itemApi.lieux_de_conservation,
+            itemApi.coordonnees[0],
+            itemApi.coordonnees.get(1),
+            itemApi.legende,
+            itemApi.titre,
+            httpToHttps(itemApi.apercu),
+            itemApi.type
         )
         return item
     }
 
-    fun itemApiObjectDoNotContainsNullData(i: ItemApiData) : Boolean{
-        return  i.id!=null && i.periode!=null  && i.lieux!=null && i.url!=null &&
-                i.lieux_de_conservation!=null && i.legende!=null && i.titre!=null && i.apercu!=null
-                && i.type!=null && i.coordonnees!=null
+    fun itemApiObjectDoNotContainsNullData(i: ItemApiData): Boolean {
+        return i.id != null && i.periode != null && i.lieux != null && i.url != null &&
+                i.lieux_de_conservation != null && i.legende != null && i.titre != null && i.apercu != null
+                && i.type != null && i.coordonnees != null
     }
 }
