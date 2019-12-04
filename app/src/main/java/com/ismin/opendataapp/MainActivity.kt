@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Impossible to retrieve info from API : $t",
+                    "Impossible d'actualiser les données. Verifier votre connexion internet.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
