@@ -27,6 +27,7 @@
         Il est aussi possible de télécharger l\'archive.</string>
     <string name="auteurs">Auteurs de l\'application</string>
     <string name="auteurs_txt">Pierre SEITE et Hugo SERIEYS sont les deux développeurs de ce projet.</string>
+    <string name="item_floating_button_text">PNG</string>
 
 
 </resources>
