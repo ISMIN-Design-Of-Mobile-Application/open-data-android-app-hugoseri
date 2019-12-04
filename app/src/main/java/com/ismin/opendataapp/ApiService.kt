@@ -6,7 +6,8 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("api/records/1.0/search/?dataset=archives-sncf-new%40datasncf&sort=-id")
-    fun getAllDtata(@Query("rows") nbRows : Int): Call<ApiDataFormat>
+    fun getAllDtata(@Query("rows") nbRows: Int): Call<ApiDataFormat>
+
     @GET("api/records/1.0/search/?dataset=archives-sncf-new%40datasncf&rows=1")
     fun getNbItemInAPI(): Call<ApiDataFormat>
 }
