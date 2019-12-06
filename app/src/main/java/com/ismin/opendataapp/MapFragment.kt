@@ -24,10 +24,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private lateinit var itemDao: ItemDao
     private var mapAlreadyset: Boolean = false
 
-    //TO BE REMOVED
     lateinit var items: List<Item>
 
-    // Declare a variable for the cluster manager.
     lateinit var mClusterManager: ClusterManager<ClusterItem>
 
     override fun onStart() {

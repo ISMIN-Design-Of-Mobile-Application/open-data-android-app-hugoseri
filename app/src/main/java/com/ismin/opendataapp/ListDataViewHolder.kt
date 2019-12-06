@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ismin.opendataapp.R
 
 class ListDataViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
 
