@@ -94,6 +94,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     }
 
     fun addItemsOnMap() {
+        mClusterManager.clearItems()
         for ((index, item) in items.withIndex()) {
             val offsetItem = ClusterItem(item.lat, item.lng, item.titre, index.toString())
             mClusterManager.addItem(offsetItem)
