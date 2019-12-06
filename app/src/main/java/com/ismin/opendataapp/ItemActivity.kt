@@ -40,10 +40,6 @@ class ItemActivity : AppCompatActivity() {
         title.text = valFromMainActivity.titre
         val position: TextView = findViewById(R.id.a_item_txt_ville)
         position.text = valFromMainActivity.lieux
-        /*
-        val typeImg: ImageView = findViewById(R.id.a_item_img_type_data)
-        typeImg.setImageResource(getIconFromType(valFromMainActivity.type))
-        */
         val desc: TextView = findViewById(R.id.a_item_txt_description)
         desc.text = valFromMainActivity.legende
         val periode: TextView = findViewById(R.id.a_item_txt_periode)
@@ -84,15 +80,6 @@ class ItemActivity : AppCompatActivity() {
         // Verify the intent will resolve to at least one activity
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(chooser)
-        }
-    }
-
-    fun getIconFromType(type: String): Int {
-        when (type) {
-            "PDF" -> return R.drawable.ic_file_pdf
-            "JPEG" -> return R.drawable.ic_file_jpg
-            "PNG" -> return R.drawable.ic_file_png
-            else -> return R.drawable.ic_file_unknown
         }
     }
 }

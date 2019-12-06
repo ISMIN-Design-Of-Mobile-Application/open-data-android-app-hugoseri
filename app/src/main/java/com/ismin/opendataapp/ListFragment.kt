@@ -1,22 +1,16 @@
 package com.ismin.opendataapp
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import java.util.Locale.filter
-import com.google.android.gms.common.data.DataHolder
-
-
 
 
 class ListFragment : Fragment() {
@@ -26,10 +20,6 @@ class ListFragment : Fragment() {
     lateinit var adapter: ListDataAdapter
     lateinit var items: List<Item>
     lateinit var itemDao: ItemDao
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

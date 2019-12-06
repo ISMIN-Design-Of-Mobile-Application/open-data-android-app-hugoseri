@@ -30,65 +30,69 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/round_background"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
                 android:text="@string/a_propos_de_l_application"
-                android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/f_infos_txt_title_auteurs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/round_background"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="10dp"
-                android:text="@string/auteurs"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_cadre_appli" />
-
-            <TextView
-                android:id="@+id/f_infos_txt_title_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/round_background"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="10dp"
-                android:text="@string/description_de_l_application"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_description" />
 
             <TextView
                 android:id="@+id/f_infos_txt_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10sp"
-                android:text="@string/description_de_l_application_text"
+                android:text="@string/a_propos_de_lapplication_text"
                 android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/f_info_txt_title" />
+
+
+            <TextView
+                android:id="@+id/f_infos_txt_title_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/description_de_l_application"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_description" />
+
+            <TextView
+                android:id="@+id/f_infos_txt_cadre_appli"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:padding="10sp"
+                android:text="@string/description_de_l_application_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_title_description" />
+
+            <TextView
+                android:id="@+id/f_infos_txt_title_auteurs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/auteurs"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_cadre_appli" />
 
             <TextView
                 android:id="@+id/f_infos_txt_auteurs_description"
@@ -103,15 +107,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_title_auteurs" />
 
             <TextView
-                android:id="@+id/f_infos_txt_cadre_appli"
+                android:id="@+id/f_infos_txt_title_biblio"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:padding="10sp"
-                android:text="@string/a_propos_de_lapplication_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/biblio"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_title_description" />
+                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_auteurs_description" />
+
+            <TextView
+                android:id="@+id/f_infos_txt_biblio_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:text="@string/biblio_txt"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/f_infos_txt_title_biblio" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

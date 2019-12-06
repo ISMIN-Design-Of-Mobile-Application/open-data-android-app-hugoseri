@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
 
 
 class ListDataAdapter(

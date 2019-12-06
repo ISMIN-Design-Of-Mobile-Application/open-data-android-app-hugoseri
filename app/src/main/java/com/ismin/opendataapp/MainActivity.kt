@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Impossible to retrieve info from API : $t",
+                    "Impossible de récupérer les informations de l'API : $t",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -169,14 +169,14 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
                     } else {
                         Toast.makeText(
                             this@MainActivity,
-                            "Les données sont à jours.",
+                            "Les données sont à jour.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 } else {
                     Toast.makeText(
                         this@MainActivity,
-                        "Error while retrieving the number of rows in API's dataset.",
+                        "Erreur de récupération du nombre d'éléments de l'API.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity(), ListFragment.OnFragmentInteractionList
             override fun onFailure(call: Call<ApiDataFormat>, t: Throwable) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Impossible d'actualiser les données. Verifier votre connexion internet.",
+                    "Impossible d'actualiser les données. Vérifiez votre connexion internet.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
