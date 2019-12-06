@@ -1,3 +1,55 @@
 <resources>
-    <string name="app_name">OpenDataApp</string>
+    <string name="app_name">Archives SNCF</string>
+
+    <string name="a_item_centre_archive">Où est stockée cette archive ?</string>
+    <string name="a_item_desc">Description</string>
+    <string name="a_item_title">Titre</string>
+    <string name="a_item_town">Ville</string>
+    <string name="a_item_period">Period-1918</string>
+    <string name="a_item_archived_location">Archive stocké au centre SARDO</string>
+    <string name="a_item_legend">C\'est la decription du contenu. On peut y trouver beaucoup de choses, vraiment beaucoup, beaucoup beaucoup. Parmis ces choses il y a des mots mais aussi des nombres.</string>
+    <string name="a_item_content_desc_preview_img">Preview of the archive</string>
+    <string name="a_item_content_desc_type_img">Type of the archive</string>
+    <string name="a_item_content_desc_town_img">Maps pinP</string>
+    <string name="a_item_content_desc_period_img">Hourglass</string>
+    <string name="a_item_content_desc_back_img_btn">Back button (close the activity)</string>
+    <string name="a_item_content_desc_fab">Floating button (open url)</string>
+    <string name="voir_plus">Voir plus...</string>
+    <string name="titre">Titre</string>
+
+    <string name="a_propos_de_l_application">A propos de l\'application</string>
+    <string name="a_propos_de_lapplication_text">Application réalisée dans le cadre du cours Design of Mobile Application à l\'Ecole des Mines de Saint-Etienne cursus ISMIN.</string>
+
+    <string name="description_de_l_application">Description de l\'application</string>
+    <string name="description_de_l_application_text">
+        Cette application permet de visualiser les archives de la SNCF.
+        Les données d\'archives étant associées à une géolocalisation,
+        elles sont affichées sur une carte de la France.
+        Les informations relatives à chacune des archives sont consultables et ces mêmes archives sont téléchargeables.</string>
+
+    <string name="auteurs">Auteurs de l\'application</string>
+    <string name="auteurs_txt">Pierre SEITE et Hugo SERIEYS sont les deux développeurs de ce projet.</string>
+
+    <string name="biblio">Bibliothèques utilisées</string>
+    <string name="biblio_txt">
+        Langage de développement : Kotlin v1.3.50.
+        \nGestion des requêtes API : Retrofit 2.6.2.
+        \nGestion de la base de données locale : Room 2.2.1.
+        \nGestion de téléchargement d\'image : Glide 4.9.0.
+        \nAffichage de la carte : Play Services Maps 17.0.0.
+        \nGestion de clustering sur la carte : Android maps utils 0.6.2.
+    </string>
+
+
+    <string name="item_floating_button_text">PNG</string>
+    <string name="recherche">Recherche</string>
+    <string name="refresh_menu_btn">Rafraîchir</string>
+    <string name="archives_de_la_gare_saint_lazare">Archives de la gare saint-lazare</string>
+    <string name="paris">Paris</string>
+    <string name="image_archive">image_archive</string>
+    <string name="icon_marker">icon_marker</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+
 </resources>
